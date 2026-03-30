@@ -1,0 +1,138 @@
+<div class="container">
+  Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum quibusdam ab architecto rerum, impedit soluta nulla temporibus sequi autem odit? Veniam corporis obcaecati id eius odio cupiditate inventore consectetur quos?
+</div>
+
+<style>
+
+
+  .coustom_section {
+    {% if section.settings.background-style == 'color'%}
+     background: {{ section.settings.bg-color }};
+     {% elsif section.settings.background-style == 'image' %}
+      background-image: url("{{ section.settings.bg-image }}");
+    {% endif %}
+  }
+
+  .container {
+    max-width: {{ section.settings.container-size }};
+    margin: 0 auto;
+    padding-top: {{ section.settings.padding-top }}px;
+    padding-bottom: {{ section.settings.padding-bottom }}px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+  }
+</style>
+
+
+{% schema %}
+  {
+    "name": "Custom Section",
+    "tag": "section",
+    "class": "coustom_section",
+    "disabled_on": {
+      "groups": ["header", "footer"]
+    },
+    "settings": [
+      {
+        "type": "select",
+        "id": "container-size",
+        "label": "Layout",
+        "default": "1200px",
+        "options": [
+          {
+            "label": "Full Width",
+            "value": "100%"
+          },
+          {
+            "label": "Container",
+            "value": "1200px"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "label": "Pading Top",
+        "id": "padding-top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 50,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "label": "Pading Bottom",
+        "id": "padding-bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 50,
+        "unit": "px"
+      },
+      {
+        "type": "select",
+        "label": "Background Style",
+        "id": "background-style",
+        "options": [
+          {
+            "label": "Color",
+            "value": "color"
+          },
+          {
+            "label": "Image",
+            "value": "image"
+          }
+        ]
+      },
+      {
+        "type": "color_background",
+        "label": "Background Color ",
+        "id": "bg-color",
+        "visible_if": "{{ section.settings.background-style == 'color' }}"
+      },
+      {
+        "type": "image_picker",
+        "label": "Background Img",
+        "id": "bg-img",
+        "visible_if": "{{ section.settings.background-style == 'image' }}"
+      },
+      {
+        "type": "text",
+        "label": "Title",
+        "id": "title-text",
+        "default": "This is title"
+
+      },
+      {
+        "type": "select",
+        "label": "Title Size",
+        "id": "title-size",
+        "options": [
+          {
+            "label": "large",
+            "value": "50px"
+          },
+          {
+            "label": "Medium",
+            "value": "40px"
+          },
+          {
+            "label": "Small",
+            "value": "30px"
+          },
+          {
+            "label": "Extra Small",
+            "value": "20px"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Coustom Section"
+      }
+    ]
+
+  }
+{% endschema %}
