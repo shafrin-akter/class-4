@@ -1,5 +1,12 @@
+
+{% liquid
+   assign layout  = sectio.settings.container-size
+   assign padding-top-c = section.settings.padding-top
+   assign padding-bottom-c = section.settings.padding-bottom
+%}
+
 <div class="container">
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum quibusdam ab architecto rerum, impedit soluta nulla temporibus sequi autem odit? Veniam corporis obcaecati id eius odio cupiditate inventore consectetur quos?
+
 </div>
 
 <style>
@@ -9,7 +16,10 @@
     {% if section.settings.background-style == 'color'%}
      background: {{ section.settings.bg-color }};
      {% elsif section.settings.background-style == 'image' %}
-      background-image: url("{{ section.settings.bg-image }}");
+      background: url("{{ section.settings.bg-img | img_url: '2000x' }}");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
     {% endif %}
   }
 
@@ -125,7 +135,15 @@
             "label": "Extra Small",
             "value": "20px"
           }
-        ]
+
+        ],
+        "visible_if": "{{ section.settings.title-text != blank }}"
+      },
+      {
+        "type": "color",
+        "label": "Title Color",
+        "id": "title-color",
+        "visible_if": "{{ section.settings.title-text != blank }}"
       }
     ],
     "presets": [
