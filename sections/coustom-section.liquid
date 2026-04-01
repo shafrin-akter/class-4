@@ -1,18 +1,18 @@
-
 {% liquid
-   assign layout  = sectio.settings.container-size
-   assign padding-top-c = section.settings.padding-top
-   assign padding-bottom-c = section.settings.padding-bottom
+  assign title = section.settings.title-text
+  assign size = section.settings.title-size
+  assign t-color = section.settings.title-color
 %}
 
 <div class="container">
+  <h1>{{ title }}</h1>
 
 </div>
 
 <style>
 
 
-  .coustom_section {
+  #shopify-section-{{ section.id }} {
     {% if section.settings.background-style == 'color'%}
      background: {{ section.settings.bg-color }};
      {% elsif section.settings.background-style == 'image' %}
@@ -31,6 +31,12 @@
     padding-left: 20px;
     padding-right: 20px;
 
+  }
+
+  #shopify-section-{{ section.id }}
+  h1 {
+    font-size: {{ size }};
+    color: {{ t-color }};
   }
 </style>
 
