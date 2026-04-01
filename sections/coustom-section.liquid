@@ -7,6 +7,27 @@
 <div class="container">
   <h1>{{ title }}</h1>
 
+  {% for block in section.blocks %}
+
+    {% case block.type %}
+
+      {% when 'icon' %}
+        <div class="icon">
+          {% if block.settings.icon != blank %}
+            <img src="{{ block.settings.icon | img_url: '50x' }}">
+          {% endif %}
+          <p>{{ block.settings.icon-text }}</p>
+        </div>
+
+      {% when 'description' %}
+        <div class="description">
+          <p>{{ block.settings.description }}</p>
+        </div>
+
+    {% endcase %}
+
+  {% endfor %}
+
 </div>
 
 <style>
@@ -38,6 +59,13 @@
     font-size: {{ size }};
     color: {{ t-color }};
   }
+
+  #shopify-section-{{ section.id }}
+  .icon {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
 </style>
 
 
@@ -49,6 +77,35 @@
     "disabled_on": {
       "groups": ["header", "footer"]
     },
+    "blocks": [
+      {
+        "type": "icon",
+        "name": "Icon",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+          },
+          {
+            "type": "inline_richtext",
+            "label": "Icon Text",
+            "id": "icon-text"
+          }
+        ]
+      },
+      {
+        "type": "description",
+        "name": "Description",
+        "settings": [
+          {
+            "type": "richtext",
+            "label": "Description",
+            "id": "description"
+          }
+        ]
+      }
+    ],
     "settings": [
       {
         "type": "select",
