@@ -20,13 +20,7 @@
 </div>
 
 {% style %}
-  .feactured-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  #shopify-section-{{ section.id }}
-  .full-width {
+  #shopify-section-{{ section.id }} .full-width {
     width: 100%;
     height: 500px;
     {% if section.settings.layout_style == "bg_img" %}
@@ -39,36 +33,36 @@
     {% endif %}
   }
 
-  .full-width .layout {
-    width: 100%;
-    height: 100%;
-  }
-
   #shopify-section-{{ section.id }}
   .container {
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
     height: 500px;
+    {% if section.settings.layout_style == "bg_img" %}
+      background-image: url("{{ section.settings.bg_img | image_url: width: "1200" }}");
+      background-size: cover;
+      background-position: center;
+      background-color: transparent;
+    {% elsif section.settings.layout_style == "bg_color" %}
+      background: {{ section.settings.bg_color }};
+    {% endif %}
   }
-  .container .layout {
-    width: 100%;
-    height: 400px;
-    background: green;
-    margin: 0 auto;
-  }
+
   #shopify-section-{{ section.id }}
   .container-wrapper {
     max-width: 100%;
     width: 100%;
     height: 500px;
     margin: 0 auto;
-  }
-  .container-wrapper .layout {
-    width: 80%;
-    height: 400px;
-    background: black;
-    margin: 0 auto;
+    {% if section.settings.layout_style == "bg_img" %}
+      background-image: url("{{ section.settings.bg_img | image_url: width: "1200" }}");
+      background-size: cover;
+      background-position: center;
+      background-color: transparent;
+    {% elsif section.settings.layout_style == "bg_color" %}
+      background: {{ section.settings.bg_color }};
+    {% endif %}
   }
 {% endstyle %}
 
