@@ -7,26 +7,31 @@
 <div class="container">
   <h1>{{ title }}</h1>
 
-  {% for block in section.blocks %}
+  <div class="featured">
 
-    {% case block.type %}
+    {% for block in section.blocks %}
 
-      {% when 'icon' %}
-        <div class="icon">
-          {% if block.settings.icon != blank %}
-            <img src="{{ block.settings.icon | img_url: '50x' }}">
-          {% endif %}
-          <p>{{ block.settings.icon-text }}</p>
-        </div>
+      {% case block.type %}
 
-      {% when 'description' %}
-        <div class="description">
-          <p>{{ block.settings.description }}</p>
-        </div>
+        {% when 'icon' %}
+          <div class="icon">
+            {% if block.settings.icon != blank %}
+              <img src="{{ block.settings.icon | img_url: '50x' }}">
+            {% else %}
+              {{ 'blog-apparel-1' | placeholder_svg_tag: 'icon' }}
+            {% endif %}
+            <p>{{ block.settings.icon-text }}</p>
+          </div>
 
-    {% endcase %}
+        {% when 'description' %}
+          <div class="description">
+            <p>{{ block.settings.description }}</p>
+          </div>
 
-  {% endfor %}
+      {% endcase %}
+
+    {% endfor %}
+  </div>
 
 </div>
 
@@ -65,6 +70,12 @@
     display: flex;
     align-items: center;
     gap: 9px;
+    background-color: aquamarine;
+    padding: 2px 8px;
+  }
+  .featured {
+    display: flex;
+    gap: 10px;
   }
 </style>
 
