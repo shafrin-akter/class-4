@@ -1,230 +1,34 @@
-{% liquid
-  assign title = section.settings.title-text
-  assign size = section.settings.title-size
-  assign t-color = section.settings.title-color
-%}
-
-<div class="container">
-  <h1>{{ title }}</h1>
-
-  <div class="featured">
-
-    {% for block in section.blocks %}
-
-      {% case block.type %}
-
-        {% when 'icon' %}
-          <div class="icon">
-            {% if block.settings.icon != blank %}
-              <img src="{{ block.settings.icon | img_url: '50x' }}">
-            {% else %}
-              {{ 'blog-apparel-1' | placeholder_svg_tag: 'icon' }}
-            {% endif %}
-            <p>{{ block.settings.icon-text }}</p>
-          </div>
-
-        {% when 'description' %}
-          <div class="description">
-            <p>{{ block.settings.description }}</p>
-          </div>
-
-      {% endcase %}
-
-    {% endfor %}
-  </div>
-
-</div>
-
-<style>
-
-
-  #shopify-section-{{ section.id }} {
-    {% if section.settings.background-style == 'color'%}
-     background: {{ section.settings.bg-color }};
-     {% elsif section.settings.background-style == 'image' %}
-      background: url("{{ section.settings.bg-img | img_url: '2000x' }}");
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
-    {% endif %}
-  }
-
-  .container {
-    max-width: {{ section.settings.container-size }};
-    margin: 0 auto;
-    padding-top: {{ section.settings.padding-top }}px;
-    padding-bottom: {{ section.settings.padding-bottom }}px;
-    padding-left: 20px;
-    padding-right: 20px;
-
-  }
-
-  #shopify-section-{{ section.id }}
-  h1 {
-    font-size: {{ size }};
-    color: {{ t-color }};
-  }
-
-  #shopify-section-{{ section.id }}
-  .icon {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    background-color: aquamarine;
-    padding: 2px 8px;
-  }
-  .featured {
-    display: flex;
-    gap: 10px;
-  }
-</style>
-
-
 {% schema %}
   {
-    "name": "Custom Section",
+    "name": "Featured",
     "tag": "section",
-    "class": "coustom_section",
-    "disabled_on": {
-      "groups": ["header", "footer"]
-    },
-    "blocks": [
-      {
-        "type": "icon",
-        "name": "Icon",
-        "settings": [
-          {
-            "type": "image_picker",
-            "id": "icon",
-            "label": "Icon"
-          },
-          {
-            "type": "inline_richtext",
-            "label": "Icon Text",
-            "id": "icon-text"
-          }
-        ]
-      },
-      {
-        "type": "description",
-        "name": "Description",
-        "settings": [
-          {
-            "type": "richtext",
-            "label": "Description",
-            "id": "description"
-          }
-        ]
-      }
-    ],
+    "class": "featured_section",
     "settings": [
       {
         "type": "select",
-        "id": "container-size",
+        "id": "feature_layout",
         "label": "Layout",
-        "default": "1200px",
         "options": [
           {
             "label": "Full Width",
-            "value": "100%"
+            "value": "Full Width"
           },
           {
-            "label": "Container",
-            "value": "1200px"
+            "label": "Cotainer",
+            "value": "Container"
+          },
+          {
+            "label": "Container Wraper",
+            "value": "Container Wraper"
           }
         ]
-      },
-      {
-        "type": "range",
-        "label": "Pading Top",
-        "id": "padding-top",
-        "min": 0,
-        "max": 100,
-        "step": 1,
-        "default": 50,
-        "unit": "px"
-      },
-      {
-        "type": "range",
-        "label": "Pading Bottom",
-        "id": "padding-bottom",
-        "min": 0,
-        "max": 100,
-        "step": 1,
-        "default": 50,
-        "unit": "px"
-      },
-      {
-        "type": "select",
-        "label": "Background Style",
-        "id": "background-style",
-        "options": [
-          {
-            "label": "Color",
-            "value": "color"
-          },
-          {
-            "label": "Image",
-            "value": "image"
-          }
-        ]
-      },
-      {
-        "type": "color_background",
-        "label": "Background Color ",
-        "id": "bg-color",
-        "visible_if": "{{ section.settings.background-style == 'color' }}"
-      },
-      {
-        "type": "image_picker",
-        "label": "Background Img",
-        "id": "bg-img",
-        "visible_if": "{{ section.settings.background-style == 'image' }}"
-      },
-      {
-        "type": "inline_richtext",
-        "label": "Title",
-        "id": "title-text",
-        "default": "This is title"
-
-      },
-      {
-        "type": "select",
-        "label": "Title Size",
-        "id": "title-size",
-        "options": [
-          {
-            "label": "large",
-            "value": "50px"
-          },
-          {
-            "label": "Medium",
-            "value": "40px"
-          },
-          {
-            "label": "Small",
-            "value": "30px"
-          },
-          {
-            "label": "Extra Small",
-            "value": "20px"
-          }
-
-        ],
-        "visible_if": "{{ section.settings.title-text != blank }}"
-      },
-      {
-        "type": "color",
-        "label": "Title Color",
-        "id": "title-color",
-        "visible_if": "{{ section.settings.title-text != blank }}"
       }
     ],
     "presets": [
       {
-        "name": "Coustom Section"
+        "name": "Featured Section"
       }
     ]
-
   }
+
 {% endschema %}
