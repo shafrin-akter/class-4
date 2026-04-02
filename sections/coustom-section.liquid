@@ -2,6 +2,20 @@
 {% liquid
   assign bg_color = section.settings.bg_color
   assign bg_img = section.settings.bg_img
+  assign margin_section = section.settings.mg | remove: '  ' | split: ','
+
+  assign mg_top = margin_section[0] | strip | default: mg_top
+  assign mg_right = margin_section[1] | strip | default: "auto"
+  assign mg_bottom = margin_section[2] | strip | default: mg_bottom
+  assign mg_left = margin_section[3] | strip | default: mg_left
+  assign margin_css = mg_top | append: " " | append: mg_right | append: " " | append: mg_bottom | append: " " | append: mg_left
+
+  assign padding_section = section.settings.pd | remove: '  ' | split: ','
+  assign pd_top = padding_section[0] | strip | default: pd_top
+  assign pd_right = padding_section[2] | strip | default: pd_right
+  assign pd_bottom = padding_section[3] | strip | default: "50px"
+  assign pd_left = padding_section[4] | strip | default: pd_left
+  assign padding_css = pd_top | append: ' ' | append: pd_right | append: ' ' | append: pd_bottom | append: '' | append: pd_left
 %}
 <div class="feactured-container
   {%  case section.settings.feature_layout %}
@@ -23,6 +37,8 @@
   #shopify-section-{{ section.id }} .full-width {
     width: 100%;
     height: 500px;
+    margin: {{ margin_css }};
+    padding: {{ padding_css }};
     {% if section.settings.layout_style == "bg_img" %}
       background-image: url("{{ section.settings.bg_img | image_url: width: "1200" }}");
       background-size: cover;
@@ -31,13 +47,15 @@
     {% elsif section.settings.layout_style == "bg_color" %}
       background: {{ section.settings.bg_color }};
     {% endif %}
+
   }
 
   #shopify-section-{{ section.id }}
   .container {
     max-width: 1200px;
     width: 100%;
-    margin: 0 auto;
+    margin: {{ margin_css }};
+    padding: {{ padding_css }};
     height: 500px;
     {% if section.settings.layout_style == "bg_img" %}
       background-image: url("{{ section.settings.bg_img | image_url: width: "1200" }}");
@@ -54,7 +72,8 @@
     max-width: 100%;
     width: 100%;
     height: 500px;
-    margin: 0 auto;
+    margin: {{ margin_css }};
+    padding: {{ padding_css }};
     {% if section.settings.layout_style == "bg_img" %}
       background-image: url("{{ section.settings.bg_img | image_url: width: "1200" }}");
       background-size: cover;
@@ -119,6 +138,21 @@
         "label": "Background Image",
         "id": "bg_img",
         "visible_if": "{{ section.settings.layout_style == 'bg_img' }}"
+      },
+      {
+        "type": "text",
+        "label": "Margin",
+        "id": "mg",
+        "default": ",,auto,",
+        "info": "Margin top, margin right, margin bottom, margin left. If you not use to blank"
+      },
+      {
+        "type": "text",
+        "label": "Padding",
+        "id": "pd",
+        "default": ",,50px,",
+        "info": "Padding top, padding right, padding bottom, padding left. If you not use to blank"
+
       }
     ],
     "presets": [
