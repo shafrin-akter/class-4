@@ -1,3 +1,57 @@
+{{ "featured.css" | asset_url | stylesheet_tag }}
+
+<div class="feactured-container
+  {%  case section.settings.feature_layout %}
+    {% when "full_width" %}
+        full-width
+    {% when "container" %}
+        container
+    {% when 'container_wrapper' %}
+        container-wrapper
+
+  {% endcase %}">
+
+  <div class="layout">
+    amars
+  </div>
+</div>
+
+{% style %}
+  .feactured-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #shopify-section-{{ section.id }}
+  .full-width {
+    width: 100%;
+    background: black;
+    height: 500px
+  }
+  #shopify-section-{{ section.id }}
+  .container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    background: red;
+    height: 500px;
+  }
+  #shopify-section-{{ section.id }}
+  .container-wrapper {
+    max-width: 100%;
+    width: 100%;
+    background: blue;
+    height: 500px;
+    margin: 0 auto;
+  }
+  .layout {
+    width: 80%;
+    height: 400px;
+    background: green;
+    margin: 0 auto;
+  }
+{% endstyle %}
+
 {% schema %}
   {
     "name": "Featured",
@@ -8,18 +62,19 @@
         "type": "select",
         "id": "feature_layout",
         "label": "Layout",
+        "default": "container",
         "options": [
           {
             "label": "Full Width",
-            "value": "Full Width"
+            "value": "full_width"
           },
           {
             "label": "Cotainer",
-            "value": "Container"
+            "value": "container"
           },
           {
-            "label": "Container Wraper",
-            "value": "Container Wraper"
+            "label": "Container Wrapper",
+            "value": "container_wrapper"
           }
         ]
       }
