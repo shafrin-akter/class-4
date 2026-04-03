@@ -16,6 +16,9 @@
   assign pd_bottom = padding_section[3] | strip | default: "50px"
   assign pd_left = padding_section[4] | strip | default: pd_left
   assign padding_css = pd_top | append: ' ' | append: pd_right | append: ' ' | append: pd_bottom | append: '' | append: pd_left
+  assign title = section.settings.title
+  assign description = section.settings.description
+  assign alignment = section.settings.alignment
 %}
 <div class="feactured-container
   {%  case section.settings.feature_layout %}
@@ -29,14 +32,29 @@
   {% endcase %}">
 
   <div class="layout">
-    amars
+    <div class="{%  case section.settings.alignment  %}
+    {%  when "left" %}
+        left
+      {%  when "center" %}
+        center
+      {%  when "right" %}
+        right
+    {% endcase %}">
+      <h2>{{ title }}</h2>
+      <p>{{ description }}</p>
+    </div>
   </div>
 </div>
 
 {% style %}
-  #shopify-section-{{ section.id }} .full-width {
+  .layout-content {
+    {% if layout-content == 'right' %}
+      text-align: center;
+    {% endif %}
+  }
+  #shopify-section-{{ section.id }}
+  .full-width {
     width: 100%;
-    height: 500px;
     margin: {{ margin_css }};
     padding: {{ padding_css }};
     {% if section.settings.layout_style == "bg_img" %}
@@ -56,7 +74,7 @@
     width: 100%;
     margin: {{ margin_css }};
     padding: {{ padding_css }};
-    height: 500px;
+
     {% if section.settings.layout_style == "bg_img" %}
       background-image: url("{{ section.settings.bg_img | image_url: width: "1200" }}");
       background-size: cover;
@@ -71,7 +89,7 @@
   .container-wrapper {
     max-width: 100%;
     width: 100%;
-    height: 500px;
+
     margin: {{ margin_css }};
     padding: {{ padding_css }};
     {% if section.settings.layout_style == "bg_img" %}
@@ -90,7 +108,51 @@
     "name": "Featured",
     "tag": "section",
     "class": "featured_section",
+
     "settings": [
+      {
+        "type": "header",
+        "content": "Layout Contant"
+      },
+      {
+        "type": "inline_richtext",
+        "label": "Title",
+        "id": "title"
+      },
+      {
+        "type": "inline_richtext",
+        "label": "Description",
+        "id": "description"
+      },
+      {
+        "type": "header",
+        "content": "Content Style"
+      },
+      {
+        "type": "select",
+        "label": "Content Alignment",
+        "id": "alignment",
+        "default": "center",
+        "options": [
+          {
+            "label": "Left Alignment",
+            "value": "left"
+          },
+          {
+            "label": "Center Alignment",
+            "value": "center"
+          },
+          {
+            "label": "Right Alignment",
+            "value": "Right"
+          }
+
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Layout"
+      },
       {
         "type": "select",
         "id": "feature_layout",
