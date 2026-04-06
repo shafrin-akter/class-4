@@ -19,7 +19,6 @@
   assign title = section.settings.title
   assign description = section.settings.description
   assign alignment = section.settings.alignment
-  
 %}
 <div class="feactured-container
   {%  case section.settings.feature_layout %}
@@ -43,6 +42,18 @@
     {% endcase %}">
       <h2>{{ title }}</h2>
       <p>{{ description }}</p>
+      <div>
+        {% for block in section.blocks %}
+          {% liquid
+            assign product = block.settings.product
+          %}
+          {% case block.type %}
+            {% when "product" %}
+              <h1>{{ product.title }}</h1>
+              {{ product.featured_media | image_url: width: 500 | image_tag }}
+          {% endcase %}
+        {% endfor %}
+      </div>
     </div>
   </div>
 </div>
@@ -109,7 +120,19 @@
     "name": "Featured",
     "tag": "section",
     "class": "featured_section",
-
+    "blocks": [
+      {
+        "type": "product",
+        "name": "Product",
+        "settings": [
+          {
+            "type": "product",
+            "label": "Select Product",
+            "id": "product"
+          }
+        ]
+      }
+    ],
     "settings": [
       {
         "type": "header",
